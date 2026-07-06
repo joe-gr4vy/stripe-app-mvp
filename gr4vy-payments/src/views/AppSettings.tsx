@@ -36,10 +36,23 @@ const AppSettings = () => {
                                     Learn more
                                 </Link>
                             </Box>
-                            <Box>
-                                To complete setup: click "View API Keys" above → "Restricted key"
-                                → "Generate new key". Copy it immediately — Stripe only shows it once.
-                                Then paste it into your Gr4vy dashboard under Settings &gt; Connectors.
+                            <Box css={{ stack: "y", gap: "xsmall", marginTop: "xsmall" }}>
+                                <Box css={{ stack: "x", gap: "small" }}>
+                                    <Box>🔑</Box>
+                                    <Box>1. Click <Box css={{ fontWeight: "semibold" }}>View API Keys</Box> above</Box>
+                                </Box>
+                                <Box css={{ stack: "x", gap: "small" }}>
+                                    <Box>⚙️</Box>
+                                    <Box>2. Under <Box css={{ fontWeight: "semibold" }}>Restricted key</Box>, click <Box css={{ fontWeight: "semibold" }}>Generate new key</Box></Box>
+                                </Box>
+                                <Box css={{ stack: "x", gap: "small" }}>
+                                    <Box>📋</Box>
+                                    <Box>3. Copy it immediately — Stripe only shows it once</Box>
+                                </Box>
+                                <Box css={{ stack: "x", gap: "small" }}>
+                                    <Box>✅</Box>
+                                    <Box>4. Paste into your Gr4vy dashboard under <Box css={{ fontWeight: "semibold" }}>Settings &gt; Connectors</Box></Box>
+                                </Box>
                             </Box>
                         </Box>
                     }
