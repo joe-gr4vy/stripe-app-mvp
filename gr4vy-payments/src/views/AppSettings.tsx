@@ -10,14 +10,21 @@ import {
 } from "@stripe/ui-extension-sdk/ui";
 import { clipboardWriteText, showToast } from "@stripe/ui-extension-sdk/utils";
 import { fetchAppEmbeddedKey } from "@stripe/ui-extension-sdk/utils/api/fetchAppEmbeddedKey";
+import { supportsFetchAppEmbeddedKey } from "@stripe/ui-extension-sdk/utils/api/supportsFetchAppEmbeddedKey";
 import { useStorage } from "@stripe/ui-extension-sdk/data";
 
 const AppSettings = () => {
     const [apiKey, setApiKey] = useState<string | null>(null);
+    const [keyUnavailable, setKeyUnavailable] = useState(false);
     const [instanceId, setInstanceId] = useStorage("gr4vy_instance_id");
 
     useEffect(() => {
-        fetchAppEmbeddedKey().then(setApiKey);
+        supportsFetchAppEmbeddedKey().then((supported) => {
+            if (supported) {
+                return fetchAppEmbeddedKey().then(setApiKey);
+            }
+            setKeyUnavailable(true);
+        }).catch(() => setKeyUnavailable(true));
     }, []);
 
     const handleCopy = async () => {
@@ -62,7 +69,7 @@ const AppSettings = () => {
                         }}
                     >
                         <Box css={{ font: "body", overflow: "auto", width: "fill" }}>
-                            {apiKey ?? "Loading…"}
+                            {apiKey ?? (keyUnavailable ? "Key not available — visit the Stripe Dashboard after installation." : "Loading…")}
                         </Box>
                         <Button
                             type="secondary"
