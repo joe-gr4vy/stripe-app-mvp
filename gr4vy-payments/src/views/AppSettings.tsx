@@ -5,12 +5,16 @@ import {
     Divider,
     Icon,
     SettingsView,
+    TextField,
 } from "@stripe/ui-extension-sdk/ui";
 import { clipboardWriteText, showToast } from "@stripe/ui-extension-sdk/utils";
 import { fetchAppEmbeddedKey } from "@stripe/ui-extension-sdk/utils/api/fetchAppEmbeddedKey";
+import { useStorage } from "@stripe/ui-extension-sdk/data";
 
 const AppSettings = () => {
     const [apiKey, setApiKey] = useState<string | null>(null);
+    const [instanceId, setInstanceId] = useStorage("gr4vy_instance_id");
+    const [subMerchantId, setSubMerchantId] = useStorage("gr4vy_sub_merchant_id");
 
     useEffect(() => {
         fetchAppEmbeddedKey().then(setApiKey);
@@ -22,88 +26,118 @@ const AppSettings = () => {
         await showToast("API key copied to clipboard", { type: "success" });
     };
 
+    const sandboxUrl = instanceId
+        ? `https://sandbox.${instanceId}.gr4vy.app`
+        : undefined;
+    const productionUrl = instanceId
+        ? `https://${instanceId}.gr4vy.app`
+        : undefined;
+
     return (
         <SettingsView>
-            <Box css={{ padding: "large" }}>
-                <Box
-                    css={{
-                        font: "heading",
-                        stack: "x",
-                        alignY: "center",
-                        gap: "small",
-                        marginBottom: "small",
-                    }}
-                >
-                    <Icon name="personWithKey" />
-                    Your Gr4vy API Key
-                </Box>
+            <Box css={{ padding: "large", stack: "y", gap: "xlarge" }}>
 
-                <Box css={{ font: "body", marginBottom: "xsmall" }}>
-                    Copy your API key and paste it into your Gr4vy dashboard under
-                </Box>
-                <Box css={{ font: "bodyEmphasized", marginBottom: "medium" }}>
-                    Settings &gt; Connectors
-                </Box>
-
-                <Box
-                    css={{
-                        stack: "x",
-                        alignY: "center",
-                        gap: "small",
-                        padding: "medium",
-                        borderRadius: "medium",
-                        backgroundColor: "container",
-                        marginBottom: "medium",
-                    }}
-                >
-                    <Box
-                        css={{
-                            font: "body",
-                            overflow: "auto",
-                            width: "fill",
-                        }}
-                    >
-                        {apiKey ?? "Loading…"}
+                {/* Intro */}
+                <Box css={{ stack: "y", gap: "small" }}>
+                    <Box css={{ font: "heading" }}>
+                        Connect Gr4vy to Stripe
                     </Box>
-                    <Button
-                        type="secondary"
-                        disabled={!apiKey}
-                        onPress={handleCopy}
-                    >
-                        <Icon name="clipboard" />
-                        Copy
-                    </Button>
+                    <Box css={{ font: "body" }}>
+                        Gr4vy is a payment orchestration platform that routes transactions
+                        across 400+ payment methods. Configure your instance below and copy
+                        your restricted API key into the Gr4vy dashboard to complete setup.
+                    </Box>
                 </Box>
 
                 <Divider />
 
-                <Box
-                    css={{
-                        font: "heading",
-                        marginTop: "medium",
-                        marginBottom: "small",
-                    }}
-                >
-                    Open Gr4vy Dashboard
+                {/* Instance settings */}
+                <Box css={{ stack: "y", gap: "medium" }}>
+                    <Box css={{ font: "subheading" }}>Instance settings</Box>
+
+                    <TextField
+                        label="Instance ID"
+                        description="Your Gr4vy instance name, e.g. acme"
+                        placeholder="acme"
+                        value={instanceId ?? ""}
+                        onChange={(e) => setInstanceId(e.target.value)}
+                        css={{ width: "fill" }}
+                    />
+
+                    <TextField
+                        label="Sub-merchant ID"
+                        description="Optional. Required only if you operate multiple sub-merchants."
+                        placeholder="sub-merchant-id"
+                        value={subMerchantId ?? ""}
+                        onChange={(e) => setSubMerchantId(e.target.value)}
+                        css={{ width: "fill" }}
+                    />
                 </Box>
 
-                <Box css={{ stack: "x", gap: "small" }}>
-                    <Button
-                        type="primary"
-                        target="_blank"
-                        href="https://sandbox.dashboard.gr4vy.com"
+                <Divider />
+
+                {/* API key */}
+                <Box css={{ stack: "y", gap: "medium" }}>
+                    <Box css={{ font: "subheading" }}>Your restricted API key</Box>
+                    <Box css={{ font: "body" }}>
+                        Copy your API key and paste it into your Gr4vy dashboard under Settings &gt; Connectors.
+                    </Box>
+
+                    <Box
+                        css={{
+                            stack: "x",
+                            alignY: "center",
+                            gap: "small",
+                            padding: "medium",
+                            borderRadius: "medium",
+                            backgroundColor: "container",
+                        }}
                     >
-                        Open Sandbox Dashboard
-                        <Icon name="external" />
-                    </Button>
-                    <Button
-                        target="_blank"
-                        href="https://dashboard.gr4vy.com"
-                    >
-                        Open Production Dashboard
-                        <Icon name="external" />
-                    </Button>
+                        <Box css={{ font: "body", overflow: "auto", width: "fill" }}>
+                            {apiKey ?? "Loading…"}
+                        </Box>
+                        <Button
+                            type="secondary"
+                            disabled={!apiKey}
+                            onPress={handleCopy}
+                        >
+                            <Icon name="clipboard" />
+                            Copy
+                        </Button>
+                    </Box>
                 </Box>
+
+                <Divider />
+
+                {/* Dashboard links */}
+                <Box css={{ stack: "y", gap: "medium" }}>
+                    <Box css={{ font: "subheading" }}>Open Gr4vy dashboard</Box>
+                    {!instanceId && (
+                        <Box css={{ font: "caption" }}>
+                            Enter your Instance ID above to enable dashboard links.
+                        </Box>
+                    )}
+                    <Box css={{ stack: "x", gap: "small" }}>
+                        <Button
+                            type="primary"
+                            target="_blank"
+                            href={sandboxUrl}
+                            disabled={!instanceId}
+                        >
+                            Open Sandbox Dashboard
+                            <Icon name="external" />
+                        </Button>
+                        <Button
+                            target="_blank"
+                            href={productionUrl}
+                            disabled={!instanceId}
+                        >
+                            Open Production Dashboard
+                            <Icon name="external" />
+                        </Button>
+                    </Box>
+                </Box>
+
             </Box>
         </SettingsView>
     );
