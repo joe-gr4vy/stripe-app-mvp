@@ -4,6 +4,7 @@ import {
     Button,
     Divider,
     Icon,
+    Link,
     SettingsView,
     TextField,
 } from "@stripe/ui-extension-sdk/ui";
@@ -26,7 +27,22 @@ const AppSettings = () => {
                 <Banner
                     type="default"
                     title="Connect Gr4vy to Stripe"
-                    description="Gr4vy is a payment orchestration platform that routes transactions across 400+ payment methods. Copy the restricted API key shown above and paste it into your Gr4vy dashboard under Settings > Connectors to complete setup."
+                    description={
+                        <Box css={{ stack: "y", gap: "small" }}>
+                            <Box>
+                                Gr4vy is a payment orchestration platform that routes
+                                transactions across 400+ payment methods.{" "}
+                                <Link href="https://gr4vy.com" target="_blank" external>
+                                    Learn more
+                                </Link>
+                            </Box>
+                            <Box>
+                                To complete setup: click "View API Keys" above → "Restricted key"
+                                → "Generate new key". Copy it immediately — Stripe only shows it once.
+                                Then paste it into your Gr4vy dashboard under Settings &gt; Connectors.
+                            </Box>
+                        </Box>
+                    }
                 />
 
                 <Divider />
