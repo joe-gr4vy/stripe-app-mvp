@@ -1,58 +1,54 @@
 {
-    "id": "gr4vy-stripe-app",
-    "version": "0.0.1",
-    "name": "Gr4vy",
-    "icon": "src/gr4vy-logo-696.png",
-    "permissions": [
-        {
-            "scope": "payment_intents:write",
-            "purpose": "Create, retrieve, capture, and cancel payment intents for card, BNPL, and alternative payment methods"
-        },
-        {
-            "scope": "setup_intents:write",
-            "purpose": "Create and retrieve setup intents for tokenizing payment methods"
-        },
-        {
-            "scope": "payment_methods:write",
-            "purpose": "Create and retrieve payment methods for card tokenization and stored payment methods"
-        },
-        {
-            "scope": "customers:write",
-            "purpose": "Create, search, and delete customers used to associate stored payment methods"
-        },
-        {
-            "scope": "charges:read",
-            "purpose": "Retrieve charge details attached to payment intents for status mapping"
-        },
-        {
-            "scope": "refunds:write",
-            "purpose": "Create refunds for card, ACH, and BNPL transactions"
-        },
-        {
-            "scope": "checkout_sessions:write",
-            "purpose": "Create checkout sessions for ACH bank payment flows"
-        },
-        {
-            "scope": "balance:read",
-            "purpose": "Read balance to verify API credentials are valid"
-        },
-        {
-            "scope": "reporting_report_runs:write",
-            "purpose": "Create and retrieve payout reconciliation report runs for settlement reporting"
-        }
+  "$schema": "https://stripe.com/stripe-app.schema.json",
+  "id": "gr4vy-stripe-app",
+  "name": "Gr4vy",
+  "version": "0.0.1",
+  "icon": "src/gr4vy-logo-696.png",
+  "ui_extension": {
+    "views": [
+      {
+        "viewport": "settings",
+        "component": "AppSettings"
+      }
     ],
-    "stripe_api_access_type": "restricted_api_key",
-    "ui_extension": {
-        "views": [
-            {
-                "viewport": "settings",
-                "component": "AppSettings"
-            }
-        ],
-        "content_security_policy": {
-            "connect-src": null,
-            "image-src": null,
-            "purpose": ""
-        }
+    "content_security_policy": {
+      "purpose": ""
     }
+  },
+  "extensions": null,
+  "permissions": [
+    {
+      "permission": "payment_intent_write",
+      "purpose": "Create, retrieve, capture, and cancel payment intents for card, BNPL, and alternative payment methods"
+    },
+    {
+      "permission": "setup_intent_write",
+      "purpose": "Create and retrieve setup intents for tokenizing payment methods"
+    },
+    {
+      "permission": "payment_method_write",
+      "purpose": "Create and retrieve payment methods for card tokenization and stored payment methods"
+    },
+    {
+      "permission": "customer_write",
+      "purpose": "Create, search, and delete customers used to associate stored payment methods"
+    },
+    {
+      "permission": "charge_write",
+      "purpose": "Retrieve charge details and create refunds for card, ACH, and BNPL transactions"
+    },
+    {
+      "permission": "checkout_session_write",
+      "purpose": "Create checkout sessions for ACH bank payment flows"
+    },
+    {
+      "permission": "balance_read",
+      "purpose": "Read balance to verify API credentials are valid"
+    },
+    {
+      "permission": "report_runs_and_report_types_read",
+      "purpose": "Create and retrieve payout reconciliation report runs for settlement reporting"
+    }
+  ],
+  "stripe_api_access_type": "restricted_api_key"
 }
