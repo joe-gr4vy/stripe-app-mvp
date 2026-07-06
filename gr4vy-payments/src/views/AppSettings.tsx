@@ -14,7 +14,6 @@ import { useStorage } from "@stripe/ui-extension-sdk/data";
 const AppSettings = () => {
     const [apiKey, setApiKey] = useState<string | null>(null);
     const [instanceId, setInstanceId] = useStorage("gr4vy_instance_id");
-    const [subMerchantId, setSubMerchantId] = useStorage("gr4vy_sub_merchant_id");
 
     useEffect(() => {
         fetchAppEmbeddedKey().then(setApiKey);
@@ -51,9 +50,9 @@ const AppSettings = () => {
 
                 <Divider />
 
-                {/* Instance settings */}
+                {/* Dashboard links */}
                 <Box css={{ stack: "y", gap: "medium" }}>
-                    <Box css={{ font: "subheading" }}>Instance settings</Box>
+                    <Box css={{ font: "subheading" }}>Open Gr4vy dashboard</Box>
 
                     <TextField
                         label="Instance ID"
@@ -64,26 +63,6 @@ const AppSettings = () => {
                         css={{ width: "fill" }}
                     />
 
-                    <TextField
-                        label="Sub-merchant ID"
-                        description="Optional. Required only if you operate multiple sub-merchants."
-                        placeholder="sub-merchant-id"
-                        value={subMerchantId ?? ""}
-                        onChange={(e) => setSubMerchantId(e.target.value)}
-                        css={{ width: "fill" }}
-                    />
-                </Box>
-
-                <Divider />
-
-                {/* Dashboard links */}
-                <Box css={{ stack: "y", gap: "medium" }}>
-                    <Box css={{ font: "subheading" }}>Open Gr4vy dashboard</Box>
-                    {!instanceId && (
-                        <Box css={{ font: "caption" }}>
-                            Enter your Instance ID above to enable dashboard links.
-                        </Box>
-                    )}
                     <Box css={{ stack: "x", gap: "small" }}>
                         <Button
                             type="primary"
