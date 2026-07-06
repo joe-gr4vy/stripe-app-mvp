@@ -76,6 +76,37 @@ const AppSettings = () => {
 
                 <Divider />
 
+                {/* Dashboard links */}
+                <Box css={{ stack: "y", gap: "medium" }}>
+                    <Box css={{ font: "subheading" }}>Open Gr4vy dashboard</Box>
+                    {!instanceId && (
+                        <Box css={{ font: "caption" }}>
+                            Enter your Instance ID above to enable dashboard links.
+                        </Box>
+                    )}
+                    <Box css={{ stack: "x", gap: "small" }}>
+                        <Button
+                            type="primary"
+                            target="_blank"
+                            href={sandboxUrl}
+                            disabled={!instanceId}
+                        >
+                            Open Sandbox Dashboard
+                            <Icon name="external" />
+                        </Button>
+                        <Button
+                            target="_blank"
+                            href={productionUrl}
+                            disabled={!instanceId}
+                        >
+                            Open Production Dashboard
+                            <Icon name="external" />
+                        </Button>
+                    </Box>
+                </Box>
+
+                <Divider />
+
                 {/* API key */}
                 <Box css={{ stack: "y", gap: "medium" }}>
                     <Box css={{ font: "subheading" }}>Your restricted API key</Box>
@@ -103,37 +134,6 @@ const AppSettings = () => {
                         >
                             <Icon name="clipboard" />
                             Copy
-                        </Button>
-                    </Box>
-                </Box>
-
-                <Divider />
-
-                {/* Dashboard links */}
-                <Box css={{ stack: "y", gap: "medium" }}>
-                    <Box css={{ font: "subheading" }}>Open Gr4vy dashboard</Box>
-                    {!instanceId && (
-                        <Box css={{ font: "caption" }}>
-                            Enter your Instance ID above to enable dashboard links.
-                        </Box>
-                    )}
-                    <Box css={{ stack: "x", gap: "small" }}>
-                        <Button
-                            type="primary"
-                            target="_blank"
-                            href={sandboxUrl}
-                            disabled={!instanceId}
-                        >
-                            Open Sandbox Dashboard
-                            <Icon name="external" />
-                        </Button>
-                        <Button
-                            target="_blank"
-                            href={productionUrl}
-                            disabled={!instanceId}
-                        >
-                            Open Production Dashboard
-                            <Icon name="external" />
                         </Button>
                     </Box>
                 </Box>

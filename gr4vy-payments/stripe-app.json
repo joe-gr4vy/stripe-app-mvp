@@ -2,7 +2,7 @@
     "id": "gr4vy-stripe-app",
     "version": "0.0.1",
     "name": "Gr4vy",
-    "icon": "",
+    "icon": "src/gr4vy-logo-696.png",
     "permissions": [],
     "stripe_api_access_type": "restricted_api_key",
     "ui_extension": {
