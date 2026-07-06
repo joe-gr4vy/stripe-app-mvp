@@ -10,7 +10,6 @@ import {
 } from "@stripe/ui-extension-sdk/ui";
 import { clipboardWriteText, showToast } from "@stripe/ui-extension-sdk/utils";
 import { fetchAppEmbeddedKey } from "@stripe/ui-extension-sdk/utils/api/fetchAppEmbeddedKey";
-import { supportsFetchAppEmbeddedKey } from "@stripe/ui-extension-sdk/utils/api/supportsFetchAppEmbeddedKey";
 import { useStorage } from "@stripe/ui-extension-sdk/data";
 
 const AppSettings = () => {
@@ -19,12 +18,9 @@ const AppSettings = () => {
     const [instanceId, setInstanceId] = useStorage("gr4vy_instance_id");
 
     useEffect(() => {
-        supportsFetchAppEmbeddedKey().then((supported) => {
-            if (supported) {
-                return fetchAppEmbeddedKey().then(setApiKey);
-            }
-            setKeyUnavailable(true);
-        }).catch(() => setKeyUnavailable(true));
+        fetchAppEmbeddedKey()
+            .then(setApiKey)
+            .catch(() => setKeyUnavailable(true));
     }, []);
 
     const handleCopy = async () => {
