@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+    Banner,
     Box,
     Button,
     Divider,
@@ -36,15 +37,41 @@ const AppSettings = () => {
         <SettingsView>
             <Box css={{ padding: "large", stack: "y", gap: "xlarge" }}>
 
-                {/* Intro */}
-                <Box css={{ stack: "y", gap: "small" }}>
-                    <Box css={{ font: "heading" }}>
-                        Connect Gr4vy to Stripe
-                    </Box>
+                {/* Banner */}
+                <Banner
+                    type="default"
+                    title="Connect Gr4vy to Stripe"
+                    description="Gr4vy is a payment orchestration platform that routes transactions across 400+ payment methods. Configure your instance below and copy your restricted API key into the Gr4vy dashboard to complete setup."
+                />
+
+                {/* API key */}
+                <Box css={{ stack: "y", gap: "medium" }}>
+                    <Box css={{ font: "subheading" }}>Your restricted API key</Box>
                     <Box css={{ font: "body" }}>
-                        Gr4vy is a payment orchestration platform that routes transactions
-                        across 400+ payment methods. Configure your instance below and copy
-                        your restricted API key into the Gr4vy dashboard to complete setup.
+                        Copy your API key and paste it into your Gr4vy dashboard under Settings &gt; Connectors.
+                    </Box>
+
+                    <Box
+                        css={{
+                            stack: "x",
+                            alignY: "center",
+                            gap: "small",
+                            padding: "medium",
+                            borderRadius: "medium",
+                            backgroundColor: "container",
+                        }}
+                    >
+                        <Box css={{ font: "body", overflow: "auto", width: "fill" }}>
+                            {apiKey ?? "Loading…"}
+                        </Box>
+                        <Button
+                            type="secondary"
+                            disabled={!apiKey}
+                            onPress={handleCopy}
+                        >
+                            <Icon name="clipboard" />
+                            Copy
+                        </Button>
                     </Box>
                 </Box>
 
@@ -80,39 +107,6 @@ const AppSettings = () => {
                         >
                             Open Production Dashboard
                             <Icon name="external" />
-                        </Button>
-                    </Box>
-                </Box>
-
-                <Divider />
-
-                {/* API key */}
-                <Box css={{ stack: "y", gap: "medium" }}>
-                    <Box css={{ font: "subheading" }}>Your restricted API key</Box>
-                    <Box css={{ font: "body" }}>
-                        Copy your API key and paste it into your Gr4vy dashboard under Settings &gt; Connectors.
-                    </Box>
-
-                    <Box
-                        css={{
-                            stack: "x",
-                            alignY: "center",
-                            gap: "small",
-                            padding: "medium",
-                            borderRadius: "medium",
-                            backgroundColor: "container",
-                        }}
-                    >
-                        <Box css={{ font: "body", overflow: "auto", width: "fill" }}>
-                            {apiKey ?? "Loading…"}
-                        </Box>
-                        <Button
-                            type="secondary"
-                            disabled={!apiKey}
-                            onPress={handleCopy}
-                        >
-                            <Icon name="clipboard" />
-                            Copy
                         </Button>
                     </Box>
                 </Box>
